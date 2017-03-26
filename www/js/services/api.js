@@ -18,10 +18,10 @@ var api = function ($http, dioConfig) {
     makeAPICall: function(opts, cb) {
       opts.apiCall = true;
       $http(opts)
-        .success(function(data) {
-          cb(null, data);
+        .then(function(data) {
+          cb(null, data.data);
         })
-        .error(function(data) {
+        .catch(function(data) {
           cb(data, null);
         });
     },
@@ -39,15 +39,15 @@ var api = function ($http, dioConfig) {
 
     /**
      *
-     * @param lat
-     * @param lng
+     * @param stateAbbrev
+     * @param district
      * @param cb
      */
-    findLegislatorsByLatLng: function(lat, lng, cb) {
+    findLegislatorsByDistrict: function(stateAbbrev, district, cb) {
       var opts = {
-        url: this.makeRelativeAPIURL('/legislators/findByLatLng'),
+        url: this.makeRelativeAPIURL('/legislators/findByDistrict'),
         method: 'GET',
-        params: {latitude: lat, longitude: lng},
+        params: {state: stateAbbrev, district: district},
         modelClass: models.Legislator
       };
 

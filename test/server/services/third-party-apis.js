@@ -10,21 +10,9 @@ var config = require('config').get('SERVER');
 var eff = require('../../../server/services/third-party-apis/eff-civic-crm');
 var potc = require('../../../server/services/third-party-apis/potc');
 var smartyStreets = require('../../../server/services/third-party-apis/smarty-streets');
-var sunlight = require('../../../server/services/third-party-apis/sunlight');
 
 
 nestedDescribe('server.services.third-party-apis', function () {
-
-  it('should make a sunlight foundation URL', function() {
-    var sunlightUrl = sunlight.makeSunlightUrl(
-      'test',
-      {test: 'test'},
-      config.get('API.SUNLIGHT_BASE_URL'),
-      config.get('CREDENTIALS.SUNLIGHT.API_KEY')
-    );
-    expect(sunlightUrl)
-      .to.be.equal('https://congress.api.sunlightfoundation.com/test?test=test&apikey=test');
-  });
 
   it('should make a POTC URL', function() {
     var potcURL = potc.makePOTCUrl(
@@ -34,7 +22,7 @@ nestedDescribe('server.services.third-party-apis', function () {
     );
 
     expect(potcURL)
-      .to.be.equal('https://congressforms.eff.org/test?debug_key=test');
+      .to.be.equal(config.get('API.POTC_BASE_URL')+'/test?debug_key='+config.get('CREDENTIALS.POTC.DEBUG_KEY'));
   });
 
   it('should make a SmartyStreets URL', function() {
